@@ -11,15 +11,17 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          const Header(),
-          Container(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            constraints: const BoxConstraints(maxWidth: kMaxWidth),
-            child: const HomeScreen(),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            const Header(),
+            Container(
+              padding: const EdgeInsets.all(kDefaultPadding),
+              constraints: const BoxConstraints(maxWidth: kMaxWidth),
+              child: const HomeScreen(),
+            ),
+          ],
+        ),
       ),
     );
   }
