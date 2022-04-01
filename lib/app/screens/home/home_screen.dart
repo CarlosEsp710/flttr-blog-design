@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constants/values.dart';
+import '../../helpers/responsive.dart';
 import '../../models/post.dart';
 
 import 'widgets/blog_post_card.dart';
@@ -26,18 +27,20 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: kDefaultPadding),
-        Expanded(
-          child: Column(
-            children: const <Widget>[
-              Search(),
-              SizedBox(height: kDefaultPadding),
-              Categories(),
-              SizedBox(height: kDefaultPadding),
-              RecentPosts(),
-            ],
+        if (!Responsive.isMobile(context))
+          const SizedBox(width: kDefaultPadding),
+        if (!Responsive.isMobile(context))
+          Expanded(
+            child: Column(
+              children: const <Widget>[
+                Search(),
+                SizedBox(height: kDefaultPadding),
+                Categories(),
+                SizedBox(height: kDefaultPadding),
+                RecentPosts(),
+              ],
+            ),
           ),
-        ),
       ],
     );
   }

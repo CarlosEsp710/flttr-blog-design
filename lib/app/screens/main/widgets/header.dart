@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../../constants/values.dart';
+import '../../../controllers/menu_controller.dart';
+import '../../../helpers/responsive.dart';
 
 import 'web_menu.dart';
 
 class Header extends StatelessWidget {
-  const Header({
+  Header({
     Key? key,
   }) : super(key: key);
+
+  final MenuController _menuController = Get.put(MenuController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +31,22 @@ class Header extends StatelessWidget {
                 children: [
                   Row(
                     children: <Widget>[
+                      if (!Responsive.isDesktop(context))
+                        IconButton(
+                          icon: const Icon(Icons.menu, color: Colors.white),
+                          onPressed: () => _menuController.openOrCloseDrawer(),
+                        ),
                       SvgPicture.asset('assets/icons/logo.svg'),
                       const Spacer(),
-                      WebMenu(),
+                      if (Responsive.isDesktop(context)) WebMenu(),
                       const Spacer(),
                       const _Social(),
                     ],
                   ),
                   const SizedBox(height: kDefaultPadding * 2),
                   const _Info(),
-                  const SizedBox(height: kDefaultPadding),
+                  if (Responsive.isDesktop(context))
+                    const SizedBox(height: kDefaultPadding),
                 ],
               ),
             ),
@@ -109,21 +120,26 @@ class _Social extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset('assets/icons/behance-alt.svg'),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: kDefaultPadding / 2,
+        if (!Responsive.isMobile(context))
+          SvgPicture.asset('assets/icons/behance-alt.svg'),
+        if (!Responsive.isMobile(context))
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: kDefaultPadding / 2,
+            ),
+            child: SvgPicture.asset('assets/icons/feather_dribbble.svg'),
           ),
-          child: SvgPicture.asset('assets/icons/feather_dribbble.svg'),
-        ),
-        SvgPicture.asset('assets/icons/feather_twitter.svg'),
-        const SizedBox(width: kDefaultPadding),
+        if (!Responsive.isMobile(context))
+          SvgPicture.asset('assets/icons/feather_twitter.svg'),
+        if (!Responsive.isMobile(context))
+          const SizedBox(width: kDefaultPadding),
         ElevatedButton(
           onPressed: () {},
           style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(
+            padding: EdgeInsets.symmetric(
               horizontal: kDefaultPadding * 1.5,
-              vertical: kDefaultPadding,
+              vertical:
+                  kDefaultPadding / (Responsive.isDesktop(context) ? 1 : 2),
             ),
           ),
           child: const Text('Let´s Talk'),

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           headline5: const TextStyle(color: kDarkBlackColor),
         ),
       ),
-      home: const MainScreen(),
+      home: MainScreen(),
     );
   }
 }
